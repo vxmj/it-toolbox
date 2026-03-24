@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { GitBranch, Copy, Check, Download, Plus, X } from 'lucide-react'
+import { Copy, Check, Download, Plus, X } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useAppStore } from '@/store/app'
 import { useClipboard } from '@/hooks/useClipboard'

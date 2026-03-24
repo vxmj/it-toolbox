@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo } from 'react'
-import { Hash, CheckCircle, XCircle, Copy, Check } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { CheckCircle, XCircle, Copy, Check } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useClipboard } from '@/hooks/useClipboard'
 import { meta } from './meta'
@@ -44,21 +44,6 @@ function generatePrimes(start: number, count: number): number[] {
   }
   
   return primes
-}
-
-function nthPrime(n: number): number {
-  let count = 0
-  let current = 2
-  
-  while (count < n) {
-    if (isPrime(current)) {
-      count++
-      if (count === n) return current
-    }
-    current++
-  }
-  
-  return current
 }
 
 function formatFactors(factors: number[]): string {

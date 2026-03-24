@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
-import { Upload, AlertCircle, CheckCircle, ShieldCheck, ShieldAlert, Copy, Check } from 'lucide-react'
-import { X509Certificate, PublicKey } from '@peculiar/x509'
+import { Upload, AlertCircle, ShieldCheck, ShieldAlert, Copy, Check } from 'lucide-react'
+import { X509Certificate } from '@peculiar/x509'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useClipboard } from '@/hooks/useClipboard'
 import { useAppStore } from '@/store/app'
@@ -199,11 +199,11 @@ export default function CertDecoder() {
                 {
                   title: '📋 基本信息',
                   rows: [
-                    { label: '序列号', value: certInfo.serialNumber, mono: true },
-                    { label: '生效时间', value: certInfo.notBefore.toLocaleString('zh-CN') },
-                    { label: '到期时间', value: certInfo.notAfter.toLocaleString('zh-CN') },
-                    { label: '签名算法', value: certInfo.signatureAlgorithm, mono: true },
-                    { label: '公钥算法', value: certInfo.keyAlgorithm + (certInfo.keySize ? ` (${certInfo.keySize} bit)` : ''), mono: true },
+                    { label: '序列号', value: certInfo.serialNumber, mono: true, small: false },
+                    { label: '生效时间', value: certInfo.notBefore.toLocaleString('zh-CN'), mono: false, small: false },
+                    { label: '到期时间', value: certInfo.notAfter.toLocaleString('zh-CN'), mono: false, small: false },
+                    { label: '签名算法', value: certInfo.signatureAlgorithm, mono: true, small: false },
+                    { label: '公钥算法', value: certInfo.keyAlgorithm + (certInfo.keySize ? ` (${certInfo.keySize} bit)` : ''), mono: true, small: false },
                   ]
                 },
                 {

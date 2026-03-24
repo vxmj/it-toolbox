@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
-import { FileText, Copy, Check, Download, Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
+import { FileText, Copy, Check, Eye, EyeOff } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useAppStore } from '@/store/app'
 import { useClipboard } from '@/hooks/useClipboard'

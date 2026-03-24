@@ -200,9 +200,9 @@ export default function ExifReader() {
               {previewUrl && (
                 <div className="bg-bg-surface border border-border-base rounded-lg p-3">
                   <img src={previewUrl} alt="preview" className="w-full h-40 object-contain rounded" />
-                  {!hideGps && data['latitude'] && data['longitude'] && (
+                  {!hideGps && data['latitude'] !== undefined && data['longitude'] !== undefined && (
                     <a
-                      href={`https://maps.google.com/?q=${data['latitude']},${data['longitude']}`}
+                      href={`https://maps.google.com/?q=${String(data['latitude'])},${String(data['longitude'])}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-1 text-xs text-accent mt-2 hover:underline"

@@ -323,7 +323,7 @@ export function parseToml(input: string): Record<string, unknown> {
   return new TomlParser(input).parse()
 }
 
-function jsonValueToToml(val: unknown, indent: number, path: string): string {
+function jsonValueToToml(val: unknown, _indent: number, _path: string): string {
   if (val === null) return 'null' // TOML doesn't have null but we'll handle it gracefully
   if (typeof val === 'boolean') return val ? 'true' : 'false'
   if (typeof val === 'number') return isFinite(val) ? String(val) : (val > 0 ? 'inf' : '-inf')

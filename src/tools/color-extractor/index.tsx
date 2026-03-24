@@ -40,12 +40,11 @@ export default function ColorExtractor() {
   const { copy } = useClipboard()
 
   const extractColors = useCallback((img: HTMLImageElement, count: number) => {
-    const thief = new ColorThief()
+    const thief = new (ColorThief as unknown as new () => { getPalette: (img: HTMLImageElement, count: number) => number[][] })()
     try {
       const palette = thief.getPalette(img, count)
       if (!palette) return
 
-      // Estimate rough dominance by sampling the image
       const canvas = document.createElement('canvas')
       canvas.width = Math.min(img.naturalWidth, 200)
       canvas.height = Math.min(img.naturalHeight, 200)
@@ -55,21 +54,20 @@ export default function ColorExtractor() {
       const pixelData = imageData.data
       const totalPixels = canvas.width * canvas.height
 
-      // Count pixels closest to each palette color
       const counts = new Array(palette.length).fill(0)
       for (let i = 0; i < pixelData.length; i += 4) {
         const r = pixelData[i], g = pixelData[i + 1], b = pixelData[i + 2]
         let bestIdx = 0, bestDist = Infinity
-        palette.forEach(([pr, pg, pb], idx) => {
-          const dist = (r - pr) ** 2 + (g - pg) ** 2 + (b - pb) ** 2
+        palette.forEach((color: number[], idx: number) => {
+          const dist = (r - color[0]) ** 2 + (g - color[1]) ** 2 + (b - color[2]) ** 2
           if (dist < bestDist) { bestDist = dist; bestIdx = idx }
         })
         counts[bestIdx]++
       }
 
-      const result: Color[] = palette.map(([r, g, b], i) => ({
-        hex: rgbToHex(r, g, b),
-        rgb: [r, g, b],
+      const result: Color[] = palette.map((color: number[], i: number) => ({
+        hex: rgbToHex(color[0], color[1], color[2]),
+        rgb: [color[0], color[1], color[2]],
         pct: Math.round((counts[i] / totalPixels) * 100),
       }))
       result.sort((a, b) => b.pct - a.pct)

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { ArrowLeftRight, Copy, Check } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useClipboard } from '@/hooks/useClipboard'
@@ -41,16 +41,16 @@ function fromRoman(roman: string): number | null {
   let result = 0
   
   for (let i = 0; i < romanUpper.length; i++) {
-    const current = ROMAN_NUMERALS.find(([s]) => s === romanUpper[i])?.[1]
-    if (!current) return null
+    const currentVal = ROMAN_NUMERALS.find(([s]) => s === romanUpper[i])?.[1]
+    if (!currentVal) return null
     
-    const next = ROMAN_NUMERALS.find(([s]) => i + 1 < romanUpper.length && s === romanUpper[i + 1])?.[1]
+    const nextVal = ROMAN_NUMERALS.find(([s]) => i + 1 < romanUpper.length && s === romanUpper[i + 1])?.[1]
     
-    if (next && current[1] < next[1]) {
+    if (nextVal && currentVal < nextVal) {
       return null
     }
     
-    result += current[1]
+    result += currentVal
   }
   
   return result
@@ -62,36 +62,29 @@ export default function RomanNumeralConverter() {
   const [mode, setMode] = useState<'toRoman' | 'fromRoman'>('toRoman')
   const { copy, copied } = useClipboard()
 
-  const convertToRoman = useCallback(() => {
+  const convertedRoman = useMemo(() => {
     const num = parseInt(arabic)
-    if (isNaN(num)) {
-      setRoman('请输入有效数字')
-      return
-    }
-    const result = toRoman(num)
-    setRoman(result)
+    if (isNaN(num)) return ''
+    return toRoman(num)
   }, [arabic])
 
-  const convertToArabic = useCallback(() => {
+  const convertedArabic = useMemo(() => {
+    if (!roman.trim()) return ''
     const result = fromRoman(roman)
-    if (result === null) {
-      setArabic('无效的罗马数字')
-      return
-    }
-    setArabic(result.toString())
+    return result !== null ? result.toString() : '无效的罗马数字'
   }, [roman])
 
   const swap = useCallback(() => {
     if (mode === 'toRoman') {
       setMode('fromRoman')
-      setArabic(roman)
-      setRoman('')
+      setArabic('')
+      setRoman(convertedRoman)
     } else {
       setMode('toRoman')
-      setRoman(arabic)
-      setArabic('')
+      setRoman('')
+      setArabic(convertedArabic !== '无效的罗马数字' ? convertedArabic : '')
     }
-  }, [mode, arabic, roman])
+  }, [mode, convertedRoman, convertedArabic])
 
   const reset = () => {
     setArabic('')
@@ -99,7 +92,7 @@ export default function RomanNumeralConverter() {
     setMode('toRoman')
   }
 
-  const outputValue = mode === 'toRoman' ? roman : arabic
+  const outputValue = mode === 'toRoman' ? convertedRoman : convertedArabic
 
   return (
     <ToolLayout meta={meta} onReset={reset} outputValue={outputValue}>
@@ -132,12 +125,11 @@ export default function RomanNumeralConverter() {
             {mode === 'toRoman' ? '阿拉伯数字' : '罗马数字'}
           </label>
           <input
-            type="number"
-            value={mode === 'toRoman' ? arabic : ''}
-            onChange={e => mode === 'toRoman' && setArabic(e.target.value)}
+            type={mode === 'toRoman' ? 'number' : 'text'}
+            value={mode === 'toRoman' ? arabic : roman}
+            onChange={e => mode === 'toRoman' ? setArabic(e.target.value) : setRoman(e.target.value.toUpperCase())}
             placeholder={mode === 'toRoman' ? '输入阿拉伯数字' : '输入罗马数字'}
             className="w-full px-4 py-3 rounded-xl bg-bg-surface border border-border-base text-text-primary text-lg font-mono focus:outline-none focus:border-accent"
-            disabled={mode === 'fromRoman'}
           />
           {mode === 'toRoman' && (
             <p className="text-xs text-text-muted">范围: 1 - 3,999,999</p>
@@ -161,11 +153,10 @@ export default function RomanNumeralConverter() {
           <div className="relative">
             <input
               type="text"
-              value={mode === 'toRoman' ? roman : arabic}
-              onChange={e => mode === 'fromRoman' && setRoman(e.target.value.toUpperCase())}
-              placeholder={mode === 'toRoman' ? '转换结果' : '转换结果'}
+              value={outputValue}
+              readOnly
+              placeholder="转换结果"
               className="w-full px-4 py-3 pr-12 rounded-xl bg-bg-surface border border-border-base text-text-primary text-lg font-mono focus:outline-none focus:border-accent"
-              readOnly={mode === 'toRoman'}
             />
             {outputValue && (
               <button

@@ -180,10 +180,10 @@ export function ToolPage() {
   const Component = toolComponents[id]
 
   useEffect(() => {
-    if (Component) addRecentTool(id)
-  }, [id, Component, addRecentTool])
+    if (id in toolComponents) addRecentTool(id)
+  }, [id, addRecentTool])
 
-  if (!Component) return <div className="p-6"><ComingSoon id={id} /></div>
+  if (!(id in toolComponents)) return <div className="p-6"><ComingSoon id={id} /></div>
 
   return (
     <div className="p-6 h-full">

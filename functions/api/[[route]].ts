@@ -6,6 +6,9 @@ import { dnsRoute } from './routes/dns'
 import { aiRoute } from './routes/ai'
 import { exchangeRoute } from './routes/exchange'
 import { proxyRoute } from './routes/proxy'
+import { whoisRoute } from './routes/whois'
+import { sslCheckRoute } from './routes/ssl-check'
+import { headersCheckRoute } from './routes/headers-check'
 
 export interface Env {
   CACHE: KVNamespace
@@ -26,5 +29,8 @@ app.route('/api/dns', dnsRoute)
 app.route('/api/ai', aiRoute)
 app.route('/api/exchange', exchangeRoute)
 app.route('/api/proxy', proxyRoute)
+app.route('/api/whois', whoisRoute)
+app.route('/api/ssl-check', sslCheckRoute)
+app.route('/api/headers-check', headersCheckRoute)
 
 export const onRequest = handle(app)

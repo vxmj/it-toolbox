@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import { GitCompare, Trash2 } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { meta } from './meta'
 import { diffText } from '@it-toolbox/core'
-import { useAppStore } from '@/store/app'
 
 type Mode = 'chars' | 'words' | 'lines'
 
@@ -11,7 +9,6 @@ export default function TextDiff() {
   const [oldText, setOldText] = useState('')
   const [newText, setNewText] = useState('')
   const [mode, setMode] = useState<Mode>('lines')
-  const { addRecentTool } = useAppStore()
 
   const diff = diffText(oldText, newText, mode)
 

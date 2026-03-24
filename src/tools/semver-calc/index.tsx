@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Tag, Copy, Check } from 'lucide-react'
+import { Tag } from 'lucide-react'
 import semver from 'semver'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useAppStore } from '@/store/app'

@@ -364,14 +364,6 @@ function parseCurlCommand(cmd: string): ParsedCurl {
   return result
 }
 
-function headersObj(parsed: ParsedCurl): string {
-  const entries = Object.entries(parsed.headers)
-  if (parsed.user) entries.push(['Authorization', `Basic ${btoa(parsed.user)}`])
-  return entries.length
-    ? `{\n    ${entries.map(([k, v]) => `'${k}': '${v.replace(/'/g, "\\'")}'`).join(',\n    ')}\n  }`
-    : '{}'
-}
-
 function curlToFetch(parsed: ParsedCurl): string {
   const parts: string[] = []
   const opts: string[] = []

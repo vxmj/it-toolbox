@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
-import { Upload, Download, Trash2 } from 'lucide-react'
+import { Upload, Download } from 'lucide-react'
 import Papa from 'papaparse'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { meta } from './meta'

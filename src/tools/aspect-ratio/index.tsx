@@ -4,13 +4,6 @@ import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useClipboard } from '@/hooks/useClipboard'
 import { meta } from './meta'
 
-interface AspectRatio {
-  name: string
-  ratio: number
-  width: number
-  height: number
-}
-
 const COMMON_RESOLUTIONS: { name: string; width: number; height: number; category: string }[] = [
   { name: 'HD', width: 1280, height: 720, category: '16:9' },
   { name: 'Full HD', width: 1920, height: 1080, category: '16:9' },

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { BookOpen, Upload, ChevronDown, ChevronRight } from 'lucide-react'
+import { Upload, ChevronDown, ChevronRight } from 'lucide-react'
 import * as yaml from 'js-yaml'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useAppStore } from '@/store/app'

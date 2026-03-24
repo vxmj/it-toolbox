@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Calculator, ArrowRightLeft } from 'lucide-react'
+import { Calculator } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { meta } from './meta'
 import { dateDifference, addDays, addMonths, addYears, type DateDiff } from '@it-toolbox/core'

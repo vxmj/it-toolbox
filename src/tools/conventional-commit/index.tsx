@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { GitCommit, Copy, Check } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import { ToolLayout } from '@/components/tool/ToolLayout'
 import { useAppStore } from '@/store/app'
 import { useClipboard } from '@/hooks/useClipboard'

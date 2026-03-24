@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon.svg', 'favicon-32x32.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'IT Toolbox',
         short_name: 'IT Toolbox',
@@ -21,12 +21,6 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: 'favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
-            purpose: 'any maskable',
-          },
-          {
             src: 'pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
@@ -36,6 +30,12 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
           },
+          {
+            src: 'favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
+            purpose: 'any',
+          },
         ],
         categories: ['developer', 'utilities', 'productivity'],
         shortcuts: [
@@ -43,18 +43,18 @@ export default defineConfig({
             name: 'JSON 格式化',
             short_name: 'JSON',
             url: '/tool/json-formatter',
-            icons: [{ src: 'favicon.svg', sizes: 'any' }],
           },
           {
             name: 'Base64 编解码',
             short_name: 'Base64',
             url: '/tool/base64',
-            icons: [{ src: 'favicon.svg', sizes: 'any' }],
           },
         ],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

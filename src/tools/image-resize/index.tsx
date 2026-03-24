@@ -15,12 +15,6 @@ interface ResizeItem {
   result: { url: string; width: number; height: number } | null
 }
 
-function formatBytes(b: number) {
-  if (b < 1024) return b + ' B'
-  if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB'
-  return (b / 1024 / 1024).toFixed(2) + ' MB'
-}
-
 async function resizeImage(
   file: File,
   targetW: number,
@@ -94,7 +88,6 @@ export default function ImageResize() {
 
   const handleFiles = useCallback((files: FileList | File[]) => {
     addRecentTool(meta.id)
-    const newItems: ResizeItem[] = []
     Array.from(files).filter(f => f.type.startsWith('image/')).forEach(f => {
       const img = new window.Image()
       const url = URL.createObjectURL(f)
