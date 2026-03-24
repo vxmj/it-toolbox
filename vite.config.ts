@@ -151,5 +151,33 @@ export default defineConfig({
   build: {
     target: 'esnext',
     chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // 核心依赖
+          'react-vendor': [
+            'react',
+            'react-dom',
+            '@tanstack/react-router',
+            'react-i18next',
+            'i18next',
+            'i18next-browser-languagedetector'
+          ],
+          // 大型依赖
+          'faker-vendor': ['@faker-js/faker'],
+          'math-vendor': ['mathjs'],
+          'icons-vendor': ['lucide-react'],
+          'markdown-vendor': ['highlight.js', 'marked', 'marked-highlight'],
+          'crypto-vendor': ['bcryptjs', 'jose'],
+          'image-vendor': ['browser-image-compression', 'exifr'],
+          'qrcode-vendor': ['qrcode', 'jsqr'],
+          'data-vendor': ['papaparse', 'js-yaml', 'sql-formatter'],
+          'color-vendor': ['chroma-js'],
+          'datetime-vendor': ['dayjs'],
+          'text-vendor': ['diff', 'fuse.js'],
+          'svg-vendor': ['svgo']
+        }
+      }
+    }
   },
 })
