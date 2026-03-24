@@ -151,43 +151,5 @@ export default defineConfig({
   build: {
     target: 'esnext',
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('/react/') || id.includes('/react-dom/')) return 'react-vendor'
-            if (id.includes('@tanstack/react-router')) return 'router'
-            if (id.includes('bcryptjs') || id.includes('jose')) return 'crypto-vendor'
-            if (id.includes('highlight.js') || id.includes('marked')) return 'markdown-vendor'
-            if (id.includes('@faker-js/faker')) return 'faker-vendor'
-            if (id.includes('mathjs')) return 'math-vendor'
-            if (id.includes('qrcode') || id.includes('jsqr')) return 'qrcode-vendor'
-            if (id.includes('exifr') || id.includes('browser-image-compression')) return 'image-vendor'
-            if (id.includes('svgo')) return 'svg-vendor'
-            if (id.includes('papaparse') || id.includes('js-yaml') || id.includes('sql-formatter')) return 'data-vendor'
-            if (id.includes('lucide-react')) return 'icons-vendor'
-            if (id.includes('chroma-js')) return 'color-vendor'
-            if (id.includes('dayjs')) return 'datetime-vendor'
-            if (id.includes('diff') || id.includes('fuse.js')) return 'text-vendor'
-            return 'vendor'
-          }
-          if (id.includes('/src/tools/')) {
-            const match = id.match(/\/src\/tools\/([^/]+)\//)
-            if (match) {
-              const toolId = match[1]
-              if (toolId.startsWith('ai-')) return 'tools-ai'
-              if (toolId.includes('json') || toolId.includes('yaml') || toolId.includes('csv')) return 'tools-data'
-              if (toolId.includes('encrypt') || toolId.includes('hash') || toolId.includes('jwt') || toolId.includes('key')) return 'tools-crypto'
-              if (toolId.includes('color') || toolId.includes('css') || toolId.includes('gradient')) return 'tools-design'
-              if (toolId.includes('image') || toolId.includes('svg') || toolId.includes('qrcode')) return 'tools-media'
-              if (toolId.includes('date') || toolId.includes('time') || toolId.includes('cron')) return 'tools-datetime'
-              if (toolId.includes('text') || toolId.includes('regex') || toolId.includes('case')) return 'tools-text'
-              if (toolId.includes('ip') || toolId.includes('dns') || toolId.includes('http') || toolId.includes('url')) return 'tools-network'
-              return 'tools-other'
-            }
-          }
-        },
-      },
-    },
   },
 })
