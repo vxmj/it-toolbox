@@ -77,11 +77,15 @@ export default function ColorPicker() {
 
   useEffect(() => {
     try {
-      chroma(hex) // validate
+      chroma(hex)
       setInputError(false)
       setFormats(computeFormats(hex, alpha))
     } catch {
-      setInputError(true)
+      if (hex.length >= 7 || (hex.length >= 4 && !hex.startsWith('#'))) {
+        setInputError(true)
+      } else {
+        setInputError(false)
+      }
     }
   }, [hex, alpha])
 
